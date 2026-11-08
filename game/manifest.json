@@ -1,0 +1,10 @@
+{
+  "loader": "game/Build/game.loader.js",
+  "dataUrl": "game/Build/game.data.unityweb",
+  "frameworkUrl": "game/Build/game.framework.js.unityweb",
+  "codeUrl": "game/Build/game.wasm.unityweb",
+  "companyName": "Event Horizon",
+  "productVersion": "0.1-demo",
+  "buildDate": "2026-11-08",
+  "sizeBytes": 29860237
+}

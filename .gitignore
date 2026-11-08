@@ -1,0 +1,7 @@
+.impeccable/
+.agents/
+*.log
+.DS_Store
+Thumbs.db
+PRODUCT.md
+DESIGN.md

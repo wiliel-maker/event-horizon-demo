@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Event Horizon — браузерная демоверсия сюжетной 2D-игры о космической станции у чёрной дыры.">
+  <meta name="theme-color" content="#f6f5f0">
+  <title>Event Horizon — играть в демоверсию</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div><h1>Event Horizon</h1><p>«Горизонт событий» · Демоверсия первой главы</p></div>
+      <a class="animation-link" href="assets/walking.gif" download>Скачать GIF для презентации</a>
+    </header>
+    <section aria-label="Игровое окно" class="player">
+      <div class="stage" id="stage">
+        <img class="poster" id="poster" src="assets/poster.jpg" width="1493" height="807" alt="Главное меню Event Horizon: чёрная дыра и светящийся аккреционный диск">
+        <canvas id="game" tabindex="0" width="1280" height="720" aria-label="Игра Event Horizon. Для управления нужны клавиатура и мышь" hidden></canvas>
+        <div class="load-panel" id="load-panel">
+          <h2 id="load-title">Станция ждёт экипаж</h2>
+          <p id="load-copy">Откройте первую главу или сразу осмотрите станцию.</p>
+          <div class="launch-actions" id="launch-actions">
+            <button id="play" type="button">Загрузить игру</button>
+            <button id="explore" type="button" class="secondary">Быстрый осмотр</button>
+          </div>
+          <div id="loading" hidden>
+            <progress id="progress" max="1" value="0" aria-label="Загрузка игры"></progress>
+            <p class="load-status" id="load-status" role="status" aria-live="polite">Загрузка игровых файлов…</p>
+          </div>
+          <button id="retry" type="button" hidden>Попробовать ещё раз</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <p id="state" role="status">Клавиатура и мышь · Прогресс в демоверсии не сохраняется</p>
+        <div class="tools">
+          <button type="button" class="quiet" id="menu" disabled>В меню</button>
+          <button type="button" class="quiet" id="fullscreen" disabled>На весь экран</button>
+        </div>
+      </div>
+    </section>
+    <section class="below" aria-label="Как играть">
+      <div class="intro"><h2>Как играть</h2><p>Нажмите на игровое окно, чтобы передать ему управление. В главе есть знакомство с экипажем, диалоги и задания. «Быстрый осмотр» пропускает вступление и открывает станцию для прогулки.</p><p class="keyboard-note">Для игры нужен компьютер с клавиатурой и браузер с поддержкой WebGL 2.</p></div>
+      <dl class="controls">
+        <div><dt><kbd>A</kbd> <kbd>D</kbd></dt><dd>Движение влево и вправо</dd></div>
+        <div><dt><kbd>W</kbd> <kbd>S</kbd></dt><dd>Подъём и спуск</dd></div>
+        <div><dt><kbd>Shift</kbd></dt><dd>Бег</dd></div>
+        <div><dt><kbd>E</kbd></dt><dd>Взаимодействие и продолжение диалога</dd></div>
+        <div><dt><kbd>1</kbd>–<kbd>5</kbd> <kbd>G</kbd></dt><dd>Выбор и бросок предмета</dd></div>
+        <div><dt><kbd>Esc</kbd></dt><dd>Пауза</dd></div>
+      </dl>
+    </section>
+    <footer><p>Школьный проект команды Event Horizon. Игра находится в разработке.</p><p>Для показа без интернета скачайте <a href="assets/walking.gif" download>GIF</a> или <a href="assets/walking.mp4" download>видео MP4</a>.</p></footer>
+  </main>
+  <script src="app.js" defer></script>
+</body>
+</html>
