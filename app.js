@@ -20,11 +20,12 @@ async function load(mode='story'){
   if(loading||unity)return;
   if(!window.WebAssembly){fail(new Error('WebAssembly недоступен'));return;}
   loading=true;window.demoStatus='loading';
+  if(matchMedia('(pointer:coarse)').matches&&!document.fullscreenElement&&!$('stage').classList.contains('immersive'))void toggleFullscreen();
   $('launch-actions').hidden=true;$('loading').hidden=false;
   $('load-title').textContent='Загружаем станцию';
   $('load-copy').textContent='Первый запуск загружает игровые файлы. Оставьте эту вкладку открытой.';
   try{
-    const response=await fetch('game/manifest.json?v=20261108-ru2');
+    const response=await fetch('game/manifest.json?v=20261110-mobile1');
     if(!response.ok)throw new Error('Конфигурация игры недоступна: '+response.status);
     const manifest=await response.json();
     await addScript(manifest.loader);
@@ -43,7 +44,8 @@ async function load(mode='story'){
     $('load-panel').hidden=true;$('poster').hidden=true;
     $('stage').dataset.playing='true';
     $('menu').disabled=false;$('fullscreen').disabled=false;
-    status('Нажмите на игровое окно. Esc: пауза. Прогресс не сохраняется.');
+    status('Клавиатура или экранные кнопки. Прогресс в демоверсии не сохраняется.');
+    window.dispatchEvent(new CustomEvent('eh-demo-ready',{detail:{instance:unity,mode}}));
     canvas.focus({preventScroll:true});
     if(mode==='explore')unity.SendMessage('WebDemo','StartFreeRoam');
     if(mode==='story')unity.SendMessage('WebDemo','StartStory');
@@ -52,7 +54,19 @@ async function load(mode='story'){
 $('play').addEventListener('click',()=>load('story'));
 $('explore').addEventListener('click',()=>load('explore'));
 $('retry').addEventListener('click',()=>location.reload());
-$('fullscreen').addEventListener('click',async()=>{try{if(!document.fullscreenElement)await $('stage').requestFullscreen();else await document.exitFullscreen();canvas.focus({preventScroll:true});}catch(error){status('Браузер не разрешил полный экран. Продолжайте играть в окне.');}});
-$('menu').addEventListener('click',()=>{if(unity)unity.SendMessage('WebDemo','OpenMenu');canvas.focus({preventScroll:true});});
+async function toggleFullscreen(){
+  const stage=$('stage');
+  try{
+    if(document.fullscreenElement)await document.exitFullscreen();
+    else if(stage.classList.contains('immersive')){stage.classList.remove('immersive');document.body.classList.remove('game-immersive');}
+    else {try{if(!stage.requestFullscreen)throw new Error('native fullscreen unavailable');await stage.requestFullscreen();}catch(error){stage.classList.add('immersive');document.body.classList.add('game-immersive');}}
+    $('stage-exit').hidden=!(document.fullscreenElement||stage.classList.contains('immersive'));
+    canvas.focus({preventScroll:true});
+  }catch(error){status('Полный экран недоступен. Можно продолжить играть в окне.');}
+}
+$('fullscreen').addEventListener('click',toggleFullscreen);
+$('stage-exit').addEventListener('click',toggleFullscreen);
+document.addEventListener('fullscreenchange',()=>{$('stage-exit').hidden=!(document.fullscreenElement||$('stage').classList.contains('immersive'));if(window.demoReleaseTouch)window.demoReleaseTouch();});
+$('menu').addEventListener('click',()=>{window.dispatchEvent(new Event('eh-demo-reset'));if(unity)unity.SendMessage('WebDemo','OpenMenu');canvas.focus({preventScroll:true});});
 canvas.addEventListener('pointerdown',()=>canvas.focus({preventScroll:true}));
 window.addEventListener('keydown',event=>{if(document.activeElement===canvas&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(event.key))event.preventDefault();});

@@ -1,10 +1,10 @@
 {
-  "loader": "game/Build/game.loader.js?v=140049d9de0e",
-  "dataUrl": "game/Build/game.data.unityweb?v=787a68c55b36",
-  "frameworkUrl": "game/Build/game.framework.js.unityweb?v=9e585f752aab",
-  "codeUrl": "game/Build/game.wasm.unityweb?v=e42020ed04e3",
+  "loader": "game/Build/game.loader.js?v=d5fd77c6f3f8",
+  "dataUrl": "game/Build/game.data.unityweb?v=1510f0348a4f",
+  "frameworkUrl": "game/Build/game.framework.js.unityweb?v=79083f9fa64b",
+  "codeUrl": "game/Build/game.wasm.unityweb?v=baa4b284028f",
   "companyName": "Event Horizon",
-  "productVersion": "0.1-demo",
-  "buildDate": "2026-11-08",
-  "sizeBytes": 29879506
+  "productVersion": "0.2-demo",
+  "buildDate": "2026-11-10",
+  "sizeBytes": 29885333
 }
